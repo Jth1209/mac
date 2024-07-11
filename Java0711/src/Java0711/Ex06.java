@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Ex06 {
 	
 	public static int getNum(String msg, Scanner scan) {
-		System.out.println(msg);
+		System.out.print(msg);
 		String input = scan.nextLine();
 		return Integer.parseInt(input);
 	}
