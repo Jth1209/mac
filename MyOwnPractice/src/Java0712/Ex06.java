@@ -25,12 +25,12 @@ public class Ex06 {
 		    	for(int i = 0; i < scores.length; i++) {
 		    		System.out.print("scores["+i+"]> ");
 		    		scores[i] = Integer.parseInt(sc.nextLine());
-;		    	}
+		    	}
 		    }else if(selectNo == 3) {
 		    	for(int i = 0; i < scores.length; i++) {
 		    		System.out.print("scores["+i+"]> ");
 		    		System.out.println(scores[i]);
-;		    	}
+		    	}
 			}else if(selectNo == 4) {
 			    int max = 0;
 			    int sum = 0;
