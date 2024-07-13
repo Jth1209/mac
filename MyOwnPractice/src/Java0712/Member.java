@@ -9,15 +9,18 @@ public class Member implements Serializable{
 	int balance;
 	@Override
 	public String toString() {
-		return "Member [name=" + name + ", ssn=" + ssn + ", tel=" + tel + ", balance=" + balance + "]";
+		return "Member [name=" + name + ", ssn=" + ssn + ", tel=" + tel + "]";
 	}
-	
 	public Member(String name, String ssn, String tel) {
 		super();
 		this.name = name;
 		this.ssn = ssn;
 		this.tel = tel;
 	}
+    public Member(int balance) {
+    	super();
+    	this.balance = balance;
+    }
 	public Member() {}
 	
 
