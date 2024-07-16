@@ -53,19 +53,20 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 					member = m;
 //					System.out.println("로그인 성공");
 					msg("로그인 성공");
+					jL4.getCursor();
 					break;
-				}else if(!m.getName().equals(name) && m.getSsn().equals(strPassword)) {
+				}else if(!(m.getName().equals(name)) && (m.getSsn().equals(strPassword))) {
 					msg("아이디를 다시 입력해주세요.");
-					return;
-				}else if(m.getName().equals(name) && !m.getSsn().equals(strPassword)) {
+					break;
+			
+				}else if((m.getName().equals(name)) && !(m.getSsn().equals(strPassword))) {
 					msg("비밀번호를 다시 입력해주세요.");
-					return;
+					break;
+					
 				}else{
 					msg("아이디와 비밀번호를 다시 입력해주세요.");
-					return;
 				}
 			}
-			System.out.println(member);
 		}
 	}
 	class Deposit implements ActionListener {//예금 이벤트
@@ -77,7 +78,7 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 				return;
 			}
 			member.deposit(Integer.parseInt(jt4.getText()));
-			msg("계좌에"+jt4.getText()+"원을 예금하셨습니다.");
+			msg("계좌에 "+jt4.getText()+"원을 예금하셨습니다.");
 		}
 	}
 	class Withdraw implements ActionListener {//출금 이벤트
@@ -89,7 +90,7 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 				return;
 			}
 			member.withdraw(Integer.parseInt(jt4.getText()));
-			msg("계좌에서"+jt4.getText()+"원을 출금하셨습니다.");
+			msg("계좌에서 "+jt4.getText()+"원을 출금하셨습니다.");
 		}
 	}
 	class Balance implements ActionListener {//계좌 확인 이벤트
@@ -109,31 +110,26 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int same = 1;
-			System.out.println("회원 가입");
+			msg("회원 가입");
 			String name2 = jt1.getText(); 
 			String ssn = jt2.getText(); 
 			String tel = jt3.getText();
-			if((name2 == null) ||(ssn == null) || (tel == null)) {
-				msg("회원 정보를 모두 입력해주세요.");
-				return;
-			}
-			for(Member id: list) {
-				if(id.getName().equals(name2)) {
-//					System.out.println("같은 아이디 존재");
-					msg("같은 아이디가 존재합니다. 다른 아이디를 사용해주세요.");
-					same = -1;
-					return;
+			if(!(name2.isEmpty()) && !(ssn.isEmpty()) && !(tel.isEmpty())) {
+				for(Member id: list) {
+					if(id.getName().equals(name2)) {
+//						System.out.println("같은 아이디 존재");
+						msg("같은 아이디가 존재합니다. 다른 아이디를 사용해주세요.");
+						same = -1;
+						return;
+					}
 				}
-			}
-			msg("사용가능한 아이디 입니다.");
-			if(same == 1) {
-			System.out.println();
-			System.out.println("[입력된 내용]");
-			System.out.println("1. 이름: " + name2);
-			System.out.println("2. 주민번호 앞 6자리: " + ssn); 
-			System.out.println("3. 전화번호: " + tel);
-					// 객체 생성
-			list.add(new Member(name2, ssn, tel));
+				msg("사용가능한 아이디 입니다.");
+				if(same == 1) {
+				msg("[입력된 내용] "+"1. 이름: " + name2+" 2. 주민번호 앞 6자리: " + ssn+" 3. 전화번호: " + tel);	// 객체 생성
+				list.add(new Member(name2, ssn, tel));
+					}
+			}else {
+				msg("모든 회원 정보를 입력해주세요.");
 		}
 	}
 
