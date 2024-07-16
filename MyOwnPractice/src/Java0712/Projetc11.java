@@ -5,30 +5,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
-import java.util.LinkedList;
 
 public class Projetc11 {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-	    LinkedList<Member> list = new LinkedList<>();	//Member[] = ArrayList<Member> list	
-	    try (FileInputStream fis = new FileInputStream("/users/taehojang/temp/members.dat");
+	    List<Member> list = null;	//Member[] = ArrayList<Member> list	
+	    try (FileInputStream fis = new FileInputStream("/users/taehojang/temp/user.dat");
 				ObjectInputStream ois = new ObjectInputStream(fis)) {
-			LinkedList<Member> list2 = (LinkedList<Member>) ois.readObject();//파일에 기본적으로 값을 받지 않고 LinkedList령으로 강제변환하여 값을 받음
+			Member[] list2 = (Member[]) ois.readObject();//파일에 기본적으로 값을 받지 않고 LinkedList령으로 강제변환하여 값을 받음
 //			Member[] list2 = (Member[]) ois.readObject(); 
-			for(Member i: list2){
-				list.add(i);//1번 배열 0 번째 부터 두번째 배열의 0번 에 리스트2의 길이만큼 복사
-			}
+			list = new ArrayList<>(Arrays.asList(list2));
 			System.out.println("파일에서 객체를 가져왔습니다.");
 		}catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	    for(Member member: list) {
-	    	if(member != null) {
 	    		System.out.println(member);
-	    		
-	    	}
 	    }
 		/*
 		 * String ex = scanner.nextLine(); if(list.get(3).name.equals(ex)){
@@ -53,10 +50,9 @@ public class Projetc11 {
 				String strPassword = scanner.nextLine();//패스워드입력
 				int find = -1;
 				
-				for(int i = 0; i<list.size(); i++) {
-					if(list.get(i).name.equals(name) && list.get(i).ssn.equals(strPassword)) {//이건 제대로 인식
-						find = i;
-						member = list.get(i);
+				for(Member m: list) {
+					if(m.getName().equals(name) && m.getSsn().equals(strPassword)) {//이건 제대로 인식
+						member = m;
 						break;
 					}
 				}
@@ -78,12 +74,12 @@ public class Projetc11 {
 				String tel = scanner.nextLine();
 				System.out.println("아이디 중복 검사");//중복된 아이디(이름)생성 불가
 				
-				for(int i = 0; i<list.size(); i++) {
-				    if(list.get(i).name.equals(name2)) {//LinkedList 사용하여 해결
-						System.out.println("같은 아이디 존재 다른 아이디를 사용해주세요");
+				for(Member m: list) {
+				    if(m.getName().equals(name2)) {//LinkedList 사용하여 해결
+						System.out.println("같은 아이디 존재. 다른 아이디를 사용해주세요");
 						same = -1;
 						break;
-					}else if(i == list.size()-1) {
+					}else {
 					    System.out.println("사용 가능한 아이디입니다.");
 					}
 
@@ -119,15 +115,15 @@ public class Projetc11 {
 					switch (menuNum2) {
 					case 1:
 						System.out.print("예금액> ");
-						member.balance += Integer.parseInt(scanner.nextLine());
+						member.deposit(Integer.parseInt(scanner.nextLine()));
 						break;
 					case 2:
 						System.out.print("출금액> ");
-						member.balance -= Integer.parseInt(scanner.nextLine());
+						member.withdraw(Integer.parseInt(scanner.nextLine()));
 						break;
 					case 3:
 						System.out.print("잔고> ");
-						System.out.println(member.balance);
+						System.out.println(member.getBalance());
 						break;
 					case 4:
 						run2 = false;
@@ -141,10 +137,9 @@ public class Projetc11 {
  	            case 4://삭제 기능
 				System.out.print("삭제할 계정의 아이디: ");
 				String dname = scanner.nextLine(); 
-				for(int i = 0; i<list.size(); i++) {
-					System.out.println(list.get(i));
-					if(list.get(i).name.equals(dname)) {
-						list.remove(i);
+				for(Member m : list) {
+					if(m.getName().equals(dname)) {
+						list.remove(m);
 					    break;
 					}
 				}
@@ -152,21 +147,21 @@ public class Projetc11 {
 				break;
 			
  	            case 5:
+ 	            	   Member[] list2 = list.toArray(new Member[list.size()]);//list.size()만큼 새로운 Member 배열을 만들어 list2에 데이터 전달
+ 	       		       try (FileOutputStream fos = new FileOutputStream("/users/taehojang/temp/user.dat");
+ 	       	                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+ 	       			            oos.writeObject(list);
+ 	       	            System.out.println("객체를 파일에 저장했습니다.");
+ 	       			
+ 	       			
+ 	       		        } catch (IOException e) {
+ 	       			            e.printStackTrace();
+ 	       		        }
+
 				run = false;
 				break;
 			}
-		}
-		try (FileOutputStream fos = new FileOutputStream("/users/taehojang/temp/members.dat");
-	             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-			
-			 oos.writeObject(list);
-	         System.out.println("객체를 파일에 저장했습니다.");
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("프로그램 전체 종료");
+		}System.out.println("프로그램 전체 종료");
 
 	}
 }
