@@ -4,7 +4,10 @@ public class A {
 
 	class B{}
 	
-	static class C{}//정적 클래스 C선언
+	
+	static class C{
+		static int field5;
+	}//정적 클래스 C선언
 	
 	B field1= new B();
 	C field2 = new C();
