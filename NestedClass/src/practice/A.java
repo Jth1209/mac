@@ -2,17 +2,18 @@ package practice;
 
 public class A {
 
-	class B{}
+	class B{}//인스턴스 클래
 	
 	
-	static class C{
-		static int field5;
-	}//정적 클래스 C선언
+	static class C{//스태틱 클래스 인스턴스 클래스와 다른 저장공간 사용
+		static int field5;//스태틱 필드, 객체생성 없이도 클래스 이름으로 호출 가능 (메모리에 등록 되어있다고 생각)
+	}//위의 B, C 클래스는 A의 멤버 클래스라고 칭한다.
 	
 	B field1= new B();
 	C field2 = new C();
 	
 	void method1() {
+		class D{};//A의 내부 클래스 지역변수 처럼 method1 내부에서만 작동 가능하다.
 		B val1 = new B();
 		C val2 = new C();
 	}
