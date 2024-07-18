@@ -38,12 +38,16 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 	JButton jb3 = new JButton("예금");
 	JButton jb4 = new JButton("출금");
 	JButton jb5 = new JButton("잔고");
+	JButton jb6 = new JButton("회원삭제");
 	JTextArea ta = new JTextArea(100,50);
 	List<Member> list = new ArrayList<>();
 	Member member;//로그인된 현재 사용자
 	
 	public void msg(String msg) {
-		ta.setText(msg);
+		ta.setText(msg+"\n");
+	}
+	public void apd(String msg) {
+		ta.append(msg+"\n");
 	}
 	
 	class Login implements ActionListener {//로그인 이벤트
@@ -80,11 +84,11 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(member == null) {
-				ta.setText("해당 기능을 사용하기 위해서는 로그인을 해야합니다.");
+				apd("해당 기능을 사용하기 위해서는 로그인을 해야합니다.");
 				return;
 			}
 			member.deposit(Integer.parseInt(jt4.getText()));
-			msg("계좌에 "+jt4.getText()+"원을 예금하셨습니다.");
+			apd("계좌에 "+jt4.getText()+"원을 예금하셨습니다.");
 		}
 	}
 	class Withdraw implements ActionListener {//출금 이벤트
@@ -92,11 +96,11 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(member == null) {
-				ta.setText("해당 기능을 사용하기 위해서는 로그인을 해야합니다.");
+				apd("해당 기능을 사용하기 위해서는 로그인을 해야합니다.");
 				return;
 			}
 			member.withdraw(Integer.parseInt(jt4.getText()));
-			msg("계좌에서 "+jt4.getText()+"원을 출금하셨습니다.");
+			apd("계좌에서 "+jt4.getText()+"원을 출금하셨습니다.");
 		}
 	}
 	class Balance implements ActionListener {//계좌 확인 이벤트
@@ -124,22 +128,38 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 				for(Member id: list) {
 					if(id.getName().equals(name2)) {
 //						System.out.println("같은 아이디 존재");
-						msg("같은 아이디가 존재합니다. 다른 아이디를 사용해주세요.");
+						apd("같은 아이디가 존재합니다. 다른 아이디를 사용해주세요.");
 						same = -1;
 						return;
 					}
 				}
-				msg("사용가능한 아이디 입니다.");
+				apd("사용가능한 아이디 입니다.");
 				if(same == 1) {
-				msg("[입력된 내용] "+"1. 이름: " + name2+" 2. 주민번호 앞 6자리: " + ssn+" 3. 전화번호: " + tel);	// 객체 생성
+				apd("[입력된 내용] "+"1. 이름: " + name2+" 2. 주민번호 앞 6자리: " + ssn+" 3. 전화번호: " + tel);	// 객체 생성
 				list.add(new Member(name2, ssn, tel));
 					}
 			}else {
-				msg("모든 회원 정보를 입력해주세요.");
+				apd("모든 회원 정보를 입력해주세요.");
 		}
 	}
 
 }
+	class Delete implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			msg("삭제할 계정의 아이디: ");
+			String dname = jt1.getText();
+			for(int i = 0; i<list.size(); i++) {
+				if(list.get(i).getName().equals(dname)) {
+					list.remove(i);
+					break;
+				}
+			}
+			msg("삭제 완료");
+		}
+		
+	}
 	public MyFrame(){
 		JPanel jp1 = new JPanel();
 		JPanel jp2 = new JPanel();
@@ -162,9 +182,10 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		}
 		
 		for(Member member: list) {
-			System.out.println(member);
+			apd(String.valueOf(member));
+			
 		}
-        msg("총 회원 수:"+ list.size());
+        apd("총 회원 수:"+ list.size());
 	    Member member = null;//로그인된 현재 사용자
 		Container con = this.getContentPane();//패널 만들어주는 Container class
 		
@@ -183,13 +204,14 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		jp3_1.setLayout(new FlowLayout());
 		jp3_2.setLayout(new FlowLayout());
 		jp3_3.setLayout(new FlowLayout());
-		jp3_1.add(jb); jp3_1.add(jb2); jp3_2.add(jL4); jp3_2.add(jt4); jp3_2.add(jb3); jp3_2.add(jb4); jp3_3.add(jb5);
+		jp3_1.add(jb); jp3_1.add(jb2); jp3_2.add(jL4); jp3_2.add(jt4); jp3_2.add(jb3); jp3_2.add(jb4); jp3_3.add(jb5); jp3_3.add(jb6);
 		
 		jb.addActionListener(new Login());
 		jb2.addActionListener(new SignIn());
 		jb3.addActionListener(new Deposit());
 		jb4.addActionListener(new Withdraw());
 		jb5.addActionListener(new Balance());
+		jb6.addActionListener(new Delete());
 		
 		this.setBounds(1200,200,700,500);
 		this.setSize(900, 500);//윈도우 창 크기 설정
@@ -197,6 +219,7 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
 		this.setTitle("계좌 입출력 프로그램(SWING)");//윈도우의 타이틀 설정
 		this.setLocation(700,300);//윈도우가 화면에 위치하는 좌표 설정
 		this.setVisible(true);//윈도우를 화면에 띄우는 설정
+		this.addWindowListener(new JFrameWindowClosingEventHandler());
 		}
 	
 	class JFrameWindowClosingEventHandler extends WindowAdapter {
@@ -214,7 +237,6 @@ public class MyFrame extends JFrame{//윈도우 창 만들어주는 클래스 JF
          	}
 			JFrame frame = (JFrame)e.getWindow();
 			frame.dispose();
-			System.out.println("WindowClosing");
 		}
 
 	}
