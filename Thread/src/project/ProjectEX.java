@@ -49,6 +49,9 @@ public class ProjectEX extends JFrame{
 	
 	JFrame jf;
 	ProjectEX(){
+		Time time = new Time();
+		Thread th = new Thread(time);
+		th.start();
 		jf = this;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -67,7 +70,7 @@ public class ProjectEX extends JFrame{
 		con.add(jp1,BorderLayout.NORTH);
 		con.add(jp2,BorderLayout.CENTER);
 		con.add(jp3,BorderLayout.SOUTH);
-		con.add(new Time(),BorderLayout.WEST);
+		con.add(time,BorderLayout.WEST);
 		
 		jp1.setLayout(new FlowLayout());
 		jp2.setLayout(new FlowLayout());
@@ -154,14 +157,17 @@ public class ProjectEX extends JFrame{
 	class Time extends JPanel implements Runnable{
 		JLabel jL1;
 		Time(){
-			jL1 = new JLabel();
+			jL1 = new JLabel("test");
 			this.add(jL1);
 		}
+		
+		@Override
 		public void run() {
 			for(;;) {
 				LocalTime localtime = LocalTime.now();
 				String str = String.format("%d : %d : %d ", localtime.getHour(),localtime.getMinute(),localtime.getSecond());
 				this.jL1.setText(str);
+//				ProjectEX.this.setTitle(str);
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

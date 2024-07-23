@@ -15,7 +15,7 @@ public class delete {
 		Scanner sc = new Scanner(System.in);
 		
 		
-		String drop = String.format("drop table dept;");
+		String drop = String.format("drop table user;");
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

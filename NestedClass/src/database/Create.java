@@ -13,10 +13,11 @@ public class Create {
 		
 		String URL = "jdbc:mysql://localhost:3306/spring5fs";
 		
-		String create = "create table dept ("+
-				"deptno int primary key,"+
-				"dname varchar(14),"+
-				"loc varchar(13));";
+		String create = "create table user ("+
+				"Uname varchar(10) primary key,"+
+				"pw varchar(20),"+
+				"tel varchar(20),"+
+				"balance int default 0);";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
