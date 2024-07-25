@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>계좌관리 프로그램</title>
 </head>
 <body>
-<h1>데이터베이스 정보 출력</h1>
-<form action = "/web0724/select.do">
-부서 지역: <input type = "text" name = "loc"><br>
+<h1>회원 삭제</h1>
+<form action = "/web0725_1/Delete.do">
+삭제할 아이디:<input type = "text" name = "name"><br>
 <input type = "submit">
 </form>
 </body>
