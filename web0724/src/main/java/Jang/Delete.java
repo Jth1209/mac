@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -15,17 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Update
+ * Servlet implementation class Delete
  */
-@WebServlet("/update.do")
-public class Update extends HttpServlet {
-	
+@WebServlet("/delete.do")
+public class Delete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Update() {
+    public Delete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,39 +32,30 @@ public class Update extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int deptno = Integer.parseInt(request.getParameter("deptno"));//jsp파일에서 name값들을 매개변수로 가져온 것
-		String dname = request.getParameter("dname");
-		String loc = request.getParameter("loc");
-		//아래 두개의 코드는 서블렛 만들자 마자 작성할 것(doGet 메소드 내부에다가 써야함
-		response.setContentType("text/html;charset=UTF8");//한글 안깨지고 나오게 해주는 코드
-		PrintWriter out = response.getWriter();//out.println 쓸 수 있게 해주는 코드
+		int deptno = Integer.parseInt(request.getParameter("deptno"));
+		response.setContentType("text/html;charset=UTF8");
+		PrintWriter out = response.getWriter();
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
 		String URL = "jdbc:mysql://localhost:3306/spring5fs";
-		String sql = "update dept set dname = ? ,loc = ? where deptno = ?;";
-		String id = "root";
-		String pw = "k1030112233!@#";
 		
+		String sql = "delete from dept where deptno = ?;";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String find = String.format("....Driver founded!<br>");//웹 사이트에 직접 보이게 하고싶으면 이렇게 써야함 아직까진
-			out.println(find);
-			conn = DriverManager.getConnection(URL,id,pw);
-			String consuc = String.format("....Connection Successful!<br>");
+			conn = DriverManager.getConnection(URL,"root","k1030112233!@#");
+			String consuc = String.format("....Connection successed<br>");
 			out.println(consuc);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dname);
-			pstmt.setString(2, loc);
-			pstmt.setInt(3, deptno);
+			pstmt.setInt(1, deptno);
 			pstmt.executeUpdate();
-			
+			String result = String.format("삭제된 부서 번호: %d <br>", deptno);
+			out.println(result);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**

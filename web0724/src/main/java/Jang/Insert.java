@@ -17,15 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Update
  */
-@WebServlet("/update.do")
-public class Update extends HttpServlet {
+@WebServlet("/insert.do")
+public class Insert extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Update() {
+    public Insert() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +46,7 @@ public class Update extends HttpServlet {
 		ResultSet rs = null;
 		
 		String URL = "jdbc:mysql://localhost:3306/spring5fs";
-		String sql = "update dept set dname = ? ,loc = ? where deptno = ?;";
+		String sql = "insert into dept (deptno , dname , loc) values (?,?,?);";
 		String id = "root";
 		String pw = "k1030112233!@#";
 		
@@ -58,11 +58,12 @@ public class Update extends HttpServlet {
 			String consuc = String.format("....Connection Successful!<br>");
 			out.println(consuc);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dname);
-			pstmt.setString(2, loc);
-			pstmt.setInt(3, deptno);
+			pstmt.setInt(1, deptno);
+			pstmt.setString(2, dname);
+			pstmt.setString(3, loc);
 			pstmt.executeUpdate();
-			
+			String insert = String.format("입력된 정보 : [ %d | %s | %s ]", deptno,dname,loc);
+			out.println(insert);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

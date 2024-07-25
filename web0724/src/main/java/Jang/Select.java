@@ -17,15 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Update
  */
-@WebServlet("/update.do")
-public class Update extends HttpServlet {
+@WebServlet("/select.do")
+public class Select extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Update() {
+    public Select() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,8 +34,6 @@ public class Update extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int deptno = Integer.parseInt(request.getParameter("deptno"));//jsp파일에서 name값들을 매개변수로 가져온 것
-		String dname = request.getParameter("dname");
 		String loc = request.getParameter("loc");
 		//아래 두개의 코드는 서블렛 만들자 마자 작성할 것(doGet 메소드 내부에다가 써야함
 		response.setContentType("text/html;charset=UTF8");//한글 안깨지고 나오게 해주는 코드
@@ -46,7 +44,7 @@ public class Update extends HttpServlet {
 		ResultSet rs = null;
 		
 		String URL = "jdbc:mysql://localhost:3306/spring5fs";
-		String sql = "update dept set dname = ? ,loc = ? where deptno = ?;";
+		String sql = "select deptno,dname,loc from dept where loc = ?;";
 		String id = "root";
 		String pw = "k1030112233!@#";
 		
@@ -55,14 +53,20 @@ public class Update extends HttpServlet {
 			String find = String.format("....Driver founded!<br>");//웹 사이트에 직접 보이게 하고싶으면 이렇게 써야함 아직까진
 			out.println(find);
 			conn = DriverManager.getConnection(URL,id,pw);
-			String consuc = String.format("....Connection Successful!<br>");
+			String consuc = String.format("....Connection Successful!<br><br>");
 			out.println(consuc);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dname);
-			pstmt.setString(2, loc);
-			pstmt.setInt(3, deptno);
-			pstmt.executeUpdate();
 			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, loc);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int cnum = rs.getInt(1);
+				String cname = rs.getString(2);
+				String cloc = rs.getString(3);
+				String result = String.format("%d , %s , %s <br>", cnum,cname,cloc);
+				out.println(result);
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
