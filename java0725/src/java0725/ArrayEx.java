@@ -18,7 +18,7 @@ public class ArrayEx {
 			
 			@Override
 			public int compare(Student o1, Student o2) {
-				return Integer.compare(o1.getScore(), o2.getScore());
+				return Integer.compare(o2.getScore(), o1.getScore());//o1과 o2를 반대로 써줘야 점수 내림차순 정렬 (높은 점수가 맨 처음 출력됨
 			}
 		};
 		

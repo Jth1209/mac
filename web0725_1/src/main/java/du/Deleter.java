@@ -52,9 +52,9 @@ public class Deleter extends HttpServlet {
 			conn = DriverManager.getConnection(URL,id,pw);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
-			pstmt.executeUpdate();
+			pstmt.executeUpdate();//insert create update  delete 다 이거 써줘야 데이터베이스에서 업데이트 됨
 			String result = String.format("<h1>%s의 회원정보를 삭제했습니다.</h1>",name);
-			
+			out.println(result);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,7 +65,6 @@ public class Deleter extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

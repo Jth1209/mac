@@ -12,7 +12,7 @@
 아&nbsp;이&nbsp;디:<input type = "text" name = "name"><br>
 비밀번호:<input type = "text" name = "ssn"><br>
 전화번호:<input type = "text" name = "tel"><br>
-<input type = "submit">
+<input type = "submit" value = "회원가입">
 </form>
 </body>
 </html>

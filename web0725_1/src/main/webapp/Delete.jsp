@@ -10,7 +10,7 @@
 <h1>회원 삭제</h1>
 <form action = "/web0725_1/Delete.do">
 삭제할 아이디:<input type = "text" name = "name"><br>
-<input type = "submit">
+<input type = "submit" value = "회원 삭제">
 </form>
 </body>
 </html>
