@@ -39,7 +39,7 @@ public class DAO {
 		return list;
 	}
 	
-	public void insert(String writer,String title,String content) {//글쓰기
+	public void insert(String writer,String title,String content) {//글쓰기, 이 메소드의 매개변수 또한 DTO로 만들 수 있음
 		conn = JDBCUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement(INSERT);
@@ -102,7 +102,7 @@ public class DAO {
 		}
 	}
 	
-	public void updateAll(String num , String writer, String title, String content) {
+	public void updateAll(String num , String writer, String title, String content) {//해당 매개변수를 DTO로 받아서 dto.getNum()등으로 작성해도 됨. 대신 해당 jsp에서 직접 DTO를 생성할 때, 이전 페이지에서 받은 정보를 넣어서 만들어줘야 한다.
 		conn = JDBCUtil.getConnection();
 		try {
 			pstmt = conn.prepareStatement(UPDATE_ALL);

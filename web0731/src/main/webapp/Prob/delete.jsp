@@ -1,33 +1,17 @@
+<%@page import="board.DAO"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-Connection conn = null;
-PreparedStatement pstmt = null;
-
-String URL = "jdbc:mysql://localhost:3306/spring5fs";
-String id = "root";
-String pw = "k1030112233!@#";
+request.setCharacterEncoding("UTF-8");
 
 String num = request.getParameter("num");
 
-String sqlTmp = "";
-String numT = "";
-String writerT = "";
-String titleT = "";
-String contentT = "";
-String regtimeT = "";
-String hitsT = "";
+DAO dao = new DAO();
 
-Class.forName("com.mysql.cj.jdbc.Driver");
-conn = DriverManager.getConnection(URL,id,pw);
-
-sqlTmp = "delete from board where num = ?";
-pstmt = conn.prepareStatement(sqlTmp);
-pstmt.setString(1,num);
-pstmt.executeUpdate();
+dao.delete(num);
 
 response.sendRedirect("list.jsp");
 %>
