@@ -1,21 +1,7 @@
-<%@page import="java.util.List"%>
-<%@page import="board.DTO"%>
-<%@page import="board.DAO"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.PreparedStatement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-String sqlTmp = "";
-String numT = "";
-String writerT = "";
-String titleT = "";
-String contentT = "";
-String regtimeT = "";
-String hitsT = "";
-
+String name = (String)session.getAttribute("name");
 %>
 <!DOCTYPE html>
 <%
@@ -25,32 +11,30 @@ String hitsT = "";
     	username = (String)session.getAttribute("name");
     }
 %>
-
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>My JSP Homepage</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+			background-color: #fac6c6;
         }
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: #ffaaaa;
+            color: #ff5050;
             padding: 10px 0;
             text-align: center;
         }
         nav {
-            background-color: #444;
-            color: #fff;
+            background-color: #f56e6e;
+            color: #ff5050;
             padding: 10px;
             text-align: center;
         }
         nav a {
-            color: #fff;
+            color: #fac6c6;
             margin: 0 10px;
             text-decoration: none;
         }
@@ -62,6 +46,36 @@ String hitsT = "";
             max-width: 100%;
             height: auto;
         }
+       	table {
+   			width:1000px; 
+   			margin: auto;
+		}
+		th{
+			background-color: #333;
+			color: #fff;
+		}
+		td{
+			background-color: #999;
+			text-align: center;
+			color: #fff;
+		}
+		td a{
+			color: #fff;
+			text-decoration: none;
+		}
+		td a:hover{
+			color: #ff5050;
+		}
+		td a:visited{
+			color: #ffc314;
+		}
+		.find-btn{
+			text-align: center;
+		}
+		.find-btn1{
+			display :inline-block;
+		}
+        input[type=text], textarea { width:100%; }
     </style>
 </head>
 <body>
@@ -106,41 +120,35 @@ String hitsT = "";
  <%
  }
  %>
+ </nav>
 
-<table>
-    <tr>
-        <th class="num"    >번호    </th>
-        <th class="title"  >제목    </th>
-        <th class="writer" >작성자  </th>
-        <th class="regtime">작성일시</th>
-        <th                >조회수  </th>
-    </tr>
-<%
-DAO dao = new DAO();
-List<DTO> dto = dao.selectAll();
-for(DTO dt : dto){
-	numT = String.valueOf(dt.getNum());
-	writerT = dt.getWriter();
-	titleT = dt.getTitle();
-	regtimeT = dt.getRegtime();
-	hitsT = String.valueOf(dt.getHits());
-%>    
-    <tr>
-        <td><%=numT %></td>
-        <td style="text-align:left;">
-            <a href="view.jsp?num=<%=numT %>"><%=titleT %></a>
-        </td>
-        <td><%=writerT %></td>
-        <td><%=regtimeT %></td>
-        <td><%=hitsT %></td>
-    </tr>   
-<%
-}
-%>
-</table>
+<form method="post" action="insert.jsp">
+    <table>
+        <tr>
+            <th>제목</th>
+            <td><input type="text" name="title"  maxlength="80"
+                       value="" required>
+            </td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td><input type="text" name="writer" maxlength="20"
+                       value="<%= name%>">
+            </td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td><textarea name="content" rows="10" required></textarea>
+            </td>
+        </tr>
+    </table>
 
-<br>
-<input type="button" value="글쓰기" onclick="location.href='write.jsp'">
+    <br>
+    <div class="find-btn">
+    <input type="submit" value="저장">
+    <input type="button" value="취소" onclick="history.back()">
+    </div>
+</form>
 
 </body>
 </html>

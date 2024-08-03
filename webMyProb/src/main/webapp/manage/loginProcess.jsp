@@ -18,19 +18,18 @@ request.setCharacterEncoding("UTF-8");
 	
     DAO dao = new DAO();
     DTO dto = dao.findId(id, pw);
-    System.out.println(dto);
     
     if (dto != null) {
      	// 로그인 성공, 쿠키 설정
         out.println("<script type='text/javascript'>");
-        out.println("alert('환영합니다, " + dto.getName() + "!');");
+        out.println("alert('환영합니다, " + dto.getName() + "님!');");
         out.println("window.location.href = 'home.jsp';");
         out.println("</script>");
         session.setAttribute("id", dto.getId());
         session.setAttribute("name", dto.getName());
     } else {
     	out.println("<script type='text/javascript'>");
-        out.println("alert('로그인 실패!');");
+        out.println("alert('아이디나 패스워드를 다시 입력해주세요.');");
         out.println("window.location.href = 'login.jsp';");
         out.println("</script>");
     }

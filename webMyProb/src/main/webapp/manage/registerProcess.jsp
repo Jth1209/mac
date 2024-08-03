@@ -11,21 +11,22 @@ String password = request.getParameter("password");
 String name = request.getParameter("name");
 
 DAO dao = new DAO();
+DTO dtoc = dao.findId(id);
 DTO dto = new DTO(id,password,name);
-dao.insertUser(dto);
 
-out.println("<script type='text/javascript'>");
-out.println("alert('회원가입 성공');");
-out.println("window.location.href = 'home.jsp';");
-out.println("</script>");
+if(dtoc != null){
+	out.println("<script type='text/javascript'>");
+	out.println("alert('이미 존재하는 아이디입니다.');");
+	out.println("window.location.href = 'register.jsp';");
+	out.println("</script>");
+
+}else{
+	dao.insertUser(dto);
+	out.println("<script type='text/javascript'>");
+	out.println("alert('회원가입 성공');");
+	out.println("window.location.href = 'home.jsp';");
+	out.println("</script>");
+	
+}
+
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
-
-</body>
-</html>

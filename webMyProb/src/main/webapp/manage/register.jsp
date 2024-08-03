@@ -60,7 +60,7 @@
             <label for="id">ID:</label>
             <input type="text" id="id" name="id" value=""required>
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="text" id="password" name="password" required>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <input type="submit" value="Register">

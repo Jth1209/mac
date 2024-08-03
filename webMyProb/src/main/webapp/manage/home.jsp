@@ -18,7 +18,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #000000;
         }
         header {
             background-color: #333;
@@ -41,6 +41,12 @@
             padding: 20px;
             text-align: center;
         }
+        .content h2{
+        	color: #fff;
+        }
+        .content p{
+        	color: #fff;
+        }
         .content img {
             max-width: 100%;
             height: auto;
@@ -49,21 +55,12 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to My JSP Homepage</h1>
+        <h1>TEST 게시판</h1>
     </header>
     <nav>
- <%
- if(username != null){
- %>
- 		 <a href="/web0801/Prob/list.jsp">홈</a>
- <% 
- }else{
- %>
- 		 <a href="">홈</a>
- <%
- }
- %>
-        <a href="#">About</a>
+
+ 		<a href="home.jsp">홈</a>
+        <a href="newHome.jsp">게시판</a>
  <%        
   if(username != null){
  %>
@@ -71,7 +68,6 @@
  <% 
  }else{
  %>
- 		 <a></a>
  <%
  }
  %>
@@ -90,7 +86,6 @@
  <%
  if(username != null){
  %>
- 		 <a></a>
  <% 
  }else{
  %>
@@ -100,9 +95,9 @@
  %>
     </nav>
     <div class="content">
-        <h2>Hello, World!</h2>
-        <p>This is a sample JSP homepage. You can add more content here.</p>
-        <img src="images/sample.jpg" alt="Sample Image">
+        <h2>테스트중인 게시판입니다.</h2>
+        <p>여러가지 추가 기능을 구현중입니다.</p>
+        <img src="karina.jpg" alt="Sample Image">
     </div>
 </body>
 </html>

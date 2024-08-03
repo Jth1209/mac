@@ -29,30 +29,33 @@ String hitsT = "";
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>My JSP Homepage</title>
+    <title>게시판 테스트</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+			background-color: #fac6c6;
         }
         header {
-            background-color: #333;
-            color: #fff;
+            background-color: #ffaaaa;
+            color: #ff5050;
             padding: 10px 0;
             text-align: center;
         }
         nav {
-            background-color: #444;
-            color: #fff;
+            background-color: #f56e6e;
+            color: #ff5050;
             padding: 10px;
             text-align: center;
         }
         nav a {
-            color: #fff;
+            color: #fac6c6;
             margin: 0 10px;
             text-decoration: none;
+        }
+        nav a:hover{
+        	color: #fff;
         }
         .content {
             padding: 20px;
@@ -62,6 +65,35 @@ String hitsT = "";
             max-width: 100%;
             height: auto;
         }
+       	table {
+   			width:1000px; 
+   			margin: auto;
+		}
+		th{
+			background-color: #333;
+			color: #fff;
+		}
+		td{
+			background-color: #999;
+			text-align: center;
+			color: #fff;
+		}
+		td a{
+			color: #fff;
+			text-decoration: none;
+		}
+		td a:hover{
+			color: #ff5050;
+		}
+		td a:visited{
+			color: #ffc314;
+		}
+		.find-btn{
+			text-align: center;
+		}
+		.find-btn1{
+			display :inline-block;
+		}
     </style>
 </head>
 <body>
@@ -106,6 +138,7 @@ String hitsT = "";
  <%
  }
  %>
+ </nav>
 
 <table>
     <tr>
@@ -139,8 +172,11 @@ for(DTO dt : dto){
 %>
 </table>
 
+
 <br>
-<input type="button" value="글쓰기" onclick="location.href='write.jsp'">
+<div class=find-btn>
+	<input type="button" value="글쓰기" onclick="location.href='write.jsp'">
+</div>
 
 </body>
 </html>
