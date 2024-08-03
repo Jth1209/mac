@@ -37,6 +37,9 @@
             margin: 0 10px;
             text-decoration: none;
         }
+       	a:hover {
+       		color: #333;
+       	}
         .content {
             padding: 20px;
             text-align: center;

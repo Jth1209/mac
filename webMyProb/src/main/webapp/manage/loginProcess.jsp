@@ -32,6 +32,7 @@ request.setCharacterEncoding("UTF-8");
         out.println("alert('아이디나 패스워드를 다시 입력해주세요.');");
         out.println("window.location.href = 'login.jsp';");
         out.println("</script>");
+        session.setAttribute("Rid",id);
     }
 
 %>
