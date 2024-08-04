@@ -64,6 +64,8 @@
 
  		<a href="home.jsp">홈</a>
         <a href="newHome.jsp">게시판</a>
+        <a href="newItem.jsp">상품목록</a>
+        <a href="newcart.jsp">장바구니</a>
  <%        
   if(username != null){
  %>
