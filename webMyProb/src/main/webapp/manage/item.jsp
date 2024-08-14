@@ -121,6 +121,9 @@
  <%
  }
  %>
+ <form>
+ <input type="hidden" name = "price" value = iname>
+ </form>
  </nav>
  <table>
     <tr>

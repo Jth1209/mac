@@ -140,7 +140,8 @@ if(dto == null){
    	 	<tr>
       	 	 <td><%=dt.getIname() %></td>
        		 <td><%=dt.getNum() %></td>
-			<td style="text-align:center;"><button type = "button" onclick="location.href='deleteItem.jsp?iname=<%=dt.getIname() %>'">삭제</button>
+       		 <td><%=dt.getNum() %></td>
+			<td style="text-align:center;"><button type = "button" onclick="location.href='deleteItemjsp.jsp?iname=<%=dt.getIname() %>'">삭제</button>
 			<button type = "button" onclick="location.href='plus.jsp?iname=<%=dt.getIname() %>'">+</button>
 			<button type = "button" onclick="location.href='minus.jsp?iname=<%=dt.getIname() %>'">-</button>
 			</td>

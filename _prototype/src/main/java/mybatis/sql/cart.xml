@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Cart">
+	<select id="selectCart" resultType="cart.cartpDTO">
+		select c.id,c.product_id,p.name,p.description,p.price,p.stock from products p,cart c where p.id=c.product_id;
+	</select>
+	<select id="selectStock" parameterType="int" resultType="cart.cartpDTO">
+		select p.stock FROM products p,cart c where p.id=c.product_id and c.id=#{id}
+	</select>
+	<select id="selectQuantity" parameterType="int" resultType="cart.cartpDTO">
+		select c.quantity FROM products p,cart c where p.id=c.product_id and c.id=#{id}
+	</select>
+	<delete id="deleteAll" parameterType="int">
+		delete from cart cascade constraints
+	</delete>
+	<update id="plus" parameterType="int">
+		update cart set
+		quantity=quantity+1
+		where id=#{id}
+	</update>
+	<update id="minus" parameterType="int">
+		update cart set
+		quantity=quantity-1
+		where id=#{id}
+	</update>
+	<delete id="deleteOne" parameterType="int">
+		delete from cart where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+	<select id="selectOne" parameterType="string" resultType="com.board.db.LoginDto">
+		select * from member where id=#{id}
+	</select>
+	<select id="checkUser" parameterType="com.board.db.LoginDto" resultType="int">
+		select count(*) FROM member where id=#{id} and pw=#{pw}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.board.db.LoginDto">
+		insert into member (id,pw,name) values
+		(#{id},#{pw},#{name})
+	</insert>
+	<update id="updateUser" parameterType="com.board.db.LoginDto">
+		update member set
+		pw=#{pw},name=#{name}
+		where id=#{id}
+	</update>
+	<delete id="deleteUser" parameterType="string">
+		delete from member where id=#{id}
+	</delete>
+</mapper>

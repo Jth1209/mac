@@ -1,6 +1,6 @@
 
-<%@page import="login.DTO"%>
-<%@page import="login.DAO"%>
+<%@page import="member.DTO"%>
+<%@page import="member.DAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

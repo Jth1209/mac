@@ -8,7 +8,13 @@
 	System.out.println(iname);
 
 	itemDAO dao = new itemDAO();
-    dao.insertUser(iname);
+	
+	if(dao.selectUser(iname) == 1){
+		dao.updateNum(iname);
+	}else{
+   		dao.insertUser(iname);
+	}
+	
     
     response.sendRedirect("item.jsp");
 %>

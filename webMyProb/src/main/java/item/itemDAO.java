@@ -21,6 +21,8 @@ public class itemDAO {
 	private String selectItem2 = "select * from useritem where iname = ?";
 	private String updateNum = "update useritem set num = num + 1 where iname = ?";
 	private String updateNum2= "update useritem set num = num - 1 where iname = ?";
+	private String userCheck = "select count(*) from useritem where iname = ?";
+	private String deleteItem = "delete from useritem where iname = ?";
 	
 	public List<itemDTO> selectItem() {
 		conn = JDBCUtil.getConnection();
@@ -138,5 +140,38 @@ public class itemDAO {
 			JDBCUtil.close(pstmt, conn);
 		}
 		
+	}
+	
+	public int selectUser(String iname) {
+		conn = JDBCUtil.getConnection();
+		int check = 0;
+		try {
+			pstmt = conn.prepareStatement(userCheck);
+			pstmt.setString(1,iname);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				check = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.close(rs, pstmt, conn);
+		}
+		return check;
+	}
+	
+	public void deleteItem(String iname) {
+		conn = JDBCUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement(deleteItem);
+			pstmt.setString(1, iname);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.close(pstmt, conn);
+		}
 	}
 }
