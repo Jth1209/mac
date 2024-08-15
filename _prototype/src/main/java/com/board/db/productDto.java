@@ -1,22 +1,35 @@
-package cart;
+package com.board.db;
 
-public class cartpDTO {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+
+public class productDto {
 	private int id;
-	private int product_id;
 	private String name;
 	private String description;
-	private int price;
+	private double price;
 	private int stock;
 	
-	public cartpDTO(int id, int product_id, String name, String description, int price, int stock) {
+	public productDto(int id, String name, String description, double price, int stock) {
 		super();
 		this.id = id;
-		this.product_id = product_id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.stock = stock;
 	}
+
+	public productDto() {
+		super();
+	}
+
 
 	public int getId() {
 		return id;
@@ -24,14 +37,6 @@ public class cartpDTO {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getProduct_id() {
-		return product_id;
-	}
-
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
 	}
 
 	public String getName() {
@@ -50,11 +55,11 @@ public class cartpDTO {
 		this.description = description;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -68,8 +73,8 @@ public class cartpDTO {
 
 	@Override
 	public String toString() {
-		return "cartpDTO [id=" + id + ", product_id=" + product_id + ", name=" + name + ", description=" + description
-				+ ", price=" + price + ", stock=" + stock + "]";
+		return "productDto [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
+				+ ", stock=" + stock + "]";
 	}
 	
 	

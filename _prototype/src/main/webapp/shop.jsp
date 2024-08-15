@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
+<head>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,25 +52,59 @@
 			</div>
 		</div>
 	</nav>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
 	<div class="container" style="padding-top: 50;">
-		<form method="post" action="${action}">
-			<div class="mb-3">
-				<label for="title" class="form-label">제목</label> <input type="text"
-					class="form-control" id="title" name="title" value="${msg.title}">
-			</div>
-			<div class="mb-3">
-				<label for="writer" class="form-label">작성자</label>
-				<input type="text" class="form-control"
-					id="writer" name="writer" value="${msg.writer}">
-			</div>
-			<div class="mb-3">
-				<label for="content" class="form-label">내용</label>
-				<textarea class="form-control" id="content" rows="3" name="content">${msg.content}</textarea>
-			</div>
-			
-			<br> <input type="submit" value="저장" class="btn btn-outline-primary"> <input
-				type="button" value="취소" onclick="history.back()" class="btn btn-outline-danger">
-		</form>
+		<button type="button" class="btn btn-outline-primary" onclick="location.href='writeP'">물품 추가</button>
+		<button type="button" class="btn btn-outline-primary" onclick="location.href='cart?id=-1'">장바구니</button>
+		<table class="table table-bordered table-hover">
+			<tr>
+				<th class="id">아이디</th>
+				<th class="name">품명</th>
+				<th class="description">설명</th>
+				<th class="price">가격</th>
+				<th>재고</th>
+			</tr>
+
+			<c:forEach var="product" items="${productList}">
+				<tr>
+					<td>${product.id}</td>
+					<td style="text-align: left;">${product.name}</td>
+					<td>${product.description}</td>
+					<td>${product.price}</td>
+					<td>${product.stock}</td>
+				<td><button type="button" class="btn btn-outline-primary"
+					onclick="location.href='cart?id=${product.id}'">카트에 담기</button><!-- 동작 안됨 -->
+					<button type="button" class="btn btn-outline-primary"
+					onclick="location.href='writeP?id=${product.id}'">정보수정</button>
+					<button type="button" class="btn btn-outline-primary"
+					onclick="location.href='deleteP?id=${product.id}'">삭제</button></td>
+				</tr>
+			</c:forEach>
+		</table>
+
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<c:forEach var="pgn" items="${pgnList}">
+					<li class="page-item"><a class="page-link"
+						href="shop?page=${pgn.pageNo}"> <c:choose>
+								<c:when test="${pgn.curPage}">
+										<u>${pgn.display}</u>
+									</c:when>
+								<c:otherwise>
+										${pgn.display}
+									</c:otherwise>
+							</c:choose>
+					</a></li>
+				</c:forEach>
+			</ul>
+		</nav>
+
 	</div>
+
+
 </body>
 </html>

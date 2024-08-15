@@ -53,17 +53,22 @@
 	<div class="container" style="padding-top: 50;">
 		<form method="post" action="${action}">
 			<div class="mb-3">
-				<label for="title" class="form-label">제목</label> <input type="text"
-					class="form-control" id="title" name="title" value="${msg.title}">
+				<label for="title" class="form-label">품목</label> <input type="text"
+					class="form-control" id="title" name="name" value="${msg.price}" required>
 			</div>
 			<div class="mb-3">
-				<label for="writer" class="form-label">작성자</label>
+				<label for="writer" class="form-label">가격</label>
 				<input type="text" class="form-control"
-					id="writer" name="writer" value="${msg.writer}">
+					id="writer" name="price" value="${msg.price}" required>
 			</div>
 			<div class="mb-3">
-				<label for="content" class="form-label">내용</label>
-				<textarea class="form-control" id="content" rows="3" name="content">${msg.content}</textarea>
+				<label for="writer" class="form-label">재고</label>
+				<input type="text" class="form-control"
+					id="writer" name="stock" value="${msg.stock}" required>
+			</div>
+			<div class="mb-3">
+				<label for="content" class="form-label">설명</label>
+				<textarea class="form-control" id="content" rows="3" name="description" required>${msg.description}</textarea>
 			</div>
 			
 			<br> <input type="submit" value="저장" class="btn btn-outline-primary"> <input

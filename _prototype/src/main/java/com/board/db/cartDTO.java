@@ -1,4 +1,4 @@
-package cart;
+package com.board.db;
 
 public class cartDTO {
 	private int id;

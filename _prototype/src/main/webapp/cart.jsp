@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
+<head>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,25 +52,44 @@
 			</div>
 		</div>
 	</nav>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
 	<div class="container" style="padding-top: 50;">
-		<form method="post" action="${action}">
-			<div class="mb-3">
-				<label for="title" class="form-label">제목</label> <input type="text"
-					class="form-control" id="title" name="title" value="${msg.title}">
-			</div>
-			<div class="mb-3">
-				<label for="writer" class="form-label">작성자</label>
-				<input type="text" class="form-control"
-					id="writer" name="writer" value="${msg.writer}">
-			</div>
-			<div class="mb-3">
-				<label for="content" class="form-label">내용</label>
-				<textarea class="form-control" id="content" rows="3" name="content">${msg.content}</textarea>
-			</div>
-			
-			<br> <input type="submit" value="저장" class="btn btn-outline-primary"> <input
-				type="button" value="취소" onclick="history.back()" class="btn btn-outline-danger">
-		</form>
+		<table class="table table-bordered table-hover">
+			<tr>
+				<th class="num">카트번호</th>
+				<th class="title">상품번호</th>
+				<th class="writer">품명</th>
+				<th class="regtime">설명</th>
+				<th>가격</th>
+				<th>재고</th>
+				<th>담은 수량</th>
+			</tr>
+
+			<c:forEach var="cart" items="${cart}">
+				<tr>
+					<td>${cart.id}</td>
+					<td>${cart.product_id }</td>
+					<td>${cart.name}</td>
+					<td>${cart.description}</td>
+					<td>${cart.price}</td>
+					<td>${cart.stock}</td>
+					<td>${cart.quantity}</td>
+					<td><button type="button" class="btn btn-outline-primary"
+						onclick="location.href='plus?id=${cart.id}'">+</button>
+						<button type="button" class="btn btn-outline-primary"
+						onclick="location.href='minus?id=${cart.id}'">-</button>
+						<button type="button" class="btn btn-outline-primary"
+						onclick="location.href='deleteC?id=${cart.id}'">삭제</button></td>
+				</tr>
+			</c:forEach>
+		</table>
+
 	</div>
+
+
 </body>
 </html>

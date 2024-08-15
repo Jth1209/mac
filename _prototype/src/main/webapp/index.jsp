@@ -31,7 +31,7 @@
           <a class="nav-link" href="#">자료실</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">쇼핑몰</a>
+          <a class="nav-link" href="shop">쇼핑몰</a>
         </li>
         <li class="nav-item dropdown">
         <%

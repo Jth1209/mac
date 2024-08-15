@@ -63,7 +63,7 @@ public class BoardService {
         return new BoardDao().selectOne(num);
     }
 
-    public void writeMsg(String writer, String title, String content,String regtime)
+    public void writeMsg(String writer, String title, String content, String regtime)
             throws Exception {
 
         if (writer  == null || writer.length()  == 0 ||
