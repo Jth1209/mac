@@ -20,7 +20,7 @@ public class productDao {
 		session = sqlsession_f.openSession(true);
 	}
 
-	public List<productpDto> getAllProducts(int num) {//물품 목록 출력
+	public List<productDto> getAllProducts(int num) {//물품 목록 출력
 		// session을 통해 쿼리를 실행하고 값을 받아온다.
 		return session.selectList("Products.selectAll",num);
 	}

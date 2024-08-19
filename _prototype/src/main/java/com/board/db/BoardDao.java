@@ -26,7 +26,7 @@ public class BoardDao {
     }
 
     // 게시글 리스트 읽기
-    public List<BoardpDto> selectList(int num) {
+    public List<BoardDto> selectList(int num) {
     	return session.selectList("Board.selectPage",num);
     }
 

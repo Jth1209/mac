@@ -1,79 +1,98 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
-	<style>
-        section {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"], input[type="password"], input[type="email"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #bf3b3b;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #000;
-        }
-    </style>
-	
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>æspa</title>
-    <link rel="icon" href="logo.ico" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/c47106c6a7.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/ie.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKT 하이닉스</title>
+<link rel="icon" href="img/logo.ico?after" type="image/x-icon">
+<link rel="stylesheet" href="css/style.css?after">
+<script src="js/ie.js"></script>
+<style>
+	section {
+	width: 100%;
+	padding: 200px 0px;
+	background: #ececff;
+	font-family: Arial, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.container {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 300px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+input[type="submit"] {
+	width: 100%;
+	padding: 10px;
+	background-color: #28a745;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #218838;
+}
+</style>
 </head>
 
 <body>
-
     <header>
         <div class="inner">
             <h1><a href="index.jsp">æspa</a></h1>
-
             <ul id="gnb">
-                <li><a href="https://www.smentertainment.com/en/">DEPARTMENT</a></li>
                 <li><a href="https://blip.kr/artists/aespa/gallery">GALLERY</a></li>
                 <li><a href="https://www.youtube.com/@aespa">YOUTUBE</a></li>
-                <li><a href="boards.jsp">COMMUNITY</a></li>
+                <li><a href="check?identify=1">COMMUNITY</a></li>
+                <li><a href="check?identify=2">자료실</a></li>
+                <li><a href="check?identify=3">GOODS</a></li>
             </ul>
 
             <ul class="util">
-                <li><a href="L_login.jsp">Login</a></li>
-                <li><a href="L_join.jsp">Join</a></li>
+            <%
+        		if(session.getAttribute("uname") != null){
+        	%>
+            	<li><a href=#>${uname }님</a></li>
+            	<li><a href="update">회원정보 수정</a></li>
+                <li><a href="logoutProcess">로그아웃</a></li>
+                <li><a href="delete">회원삭제</a></li>
+                
+            <% 		
+            	}else{
+            %>
+                <li><a href="login">로그인</a></li>
+                <li><a href="register">회원가입</a></li>
+            <%		
+            	}
+            %>
             </ul>
         </div>
     </header>

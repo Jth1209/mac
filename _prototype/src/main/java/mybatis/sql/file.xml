@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="File">
+	<select id="showFiles" parameterType="int" resultType="com.board.db.fileDTO">
+		select * from webhard order by id limit #{num},10
+	</select>
+	<select id="count" resultType="int">
+		select count(*) from webhard
+	</select>
+	<select id="selectFile" parameterType="int" resultType="com.board.db.fileDTO">
+		select * from webhard where id=#{id}
+	</select>
+	<insert id="insertFiles" parameterType="com.board.db.fileDTO">
+		insert into webhard (fname,ftime,fsize) values
+		(#{fname},#{ftime},#{fsize})
+	</insert>
+	<delete id="deleteFiles" parameterType="int">
+		delete from webhard where id=#{id}
+	</delete>
+</mapper>

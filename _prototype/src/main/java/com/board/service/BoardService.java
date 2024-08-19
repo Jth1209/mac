@@ -10,8 +10,8 @@ public class BoardService {
     private static final int listSize = 5;
     private static final int paginationSize = 5;
 
-    public List<BoardpDto> getMsgList(int pageNo) {
-       return new BoardDao().selectList((pageNo - 1) * listSize+1);
+    public List<BoardDto> getMsgList(int pageNo) {
+       return new BoardDao().selectList((pageNo - 1) * listSize);
     }
 
     public ArrayList<Pagination> getPagination(int pageNo) {

@@ -17,11 +17,10 @@
 	crossorigin="anonymous">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>홈페이지</title>
-<link rel="icon" href="sk.ico?after" type="image/x-icon">
+<link rel="icon" href="img/aespa.ico?after" type="image/x-icon">
 <link rel="stylesheet" href="css/style2.css?after">
 <script src="js/ie.js"></script>
 </head>
-
 <body>
 	<header>
         <div class="inner">
@@ -60,39 +59,52 @@
 		crossorigin="anonymous"></script>
 	<section>
 	<div class="container" style="padding-top: 50;">
-		<button type="button" class="btn btn-outline-primary"
-			onclick="location.href='shop'">상품목록으로 돌아가기</button>
-		<table class="table table-bordered table-hover">
-			<tr>
-				<th class="num">카트번호</th>
-				<th class="title">상품번호</th>
-				<th class="writer">품명</th>
-				<th class="regtime">설명</th>
-				<th>가격</th>
-				<th>재고</th>
-				<th>담은 수량</th>
-				<th>기능</th>
-			</tr>
-
-			<c:forEach var="cart" items="${cart}">
-				<tr>
-					<td>${cart.id}</td>
-					<td>${cart.product_id }</td>
-					<td>${cart.name}</td>
-					<td>${cart.description}</td>
-					<td>${cart.price}</td>
-					<td>${cart.stock}</td>
-					<td>${cart.quantity}</td>
-					<td><button type="button" class="btn btn-outline-primary"
-							onclick="location.href='plus?id=${cart.id}'">+</button>
-						<button type="button" class="btn btn-outline-primary"
-							onclick="location.href='minus?id=${cart.id}'">-</button>
-						<button type="button" class="btn btn-outline-danger"
-							onclick="location.href='deleteC?id=${cart.id}'">삭제</button></td>
-				</tr>
-			</c:forEach>
-		</table>
+	<div class="input-group mb-3">	
+		<form action="add" enctype="multipart/form-data"
+			method="post">
+			<br>
+			<input type="file" class="form-control" name="upload"><br>
+			<input type="submit" class="input-group-text" value="업로드">
+		</form>
 	</div>	
+		<br>
+
+		<table class="table table-bordered table-hover">
+				<tr>
+					<th>파일명</th>
+					<th>업로드 시간</th>
+					<th>크기</th>
+					<th>삭제</th>
+				</tr>
+
+				<c:forEach var="files" items="${fileList}">
+					<tr>
+						<td class="left"><a href="files/${files.fname }?after" class="link-info">
+								${files.fname } </a></td>
+						<td>${files.ftime }</td>
+						<td class="right">${files.fsize }&nbsp;&nbsp;</td>
+						<td><a href="deleteF?num=${files.id }">X</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<c:forEach var="pgn" items="${pgnList}">
+						<li class="page-item"><a class="page-link"
+							href="file?page=${pgn.pageNo}"> <c:choose>
+									<c:when test="${pgn.curPage}">
+										<u>${pgn.display}</u>
+									</c:when>
+									<c:otherwise>
+										${pgn.display}
+									</c:otherwise>
+								</c:choose>
+						</a></li>
+					</c:forEach>
+				</ul>
+			</nav>
+	</div>
 	</section>
 	 <footer>
         <div class="inner">

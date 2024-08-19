@@ -1,6 +1,8 @@
 package com.board.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,11 +20,16 @@ import com.board.db.LoginDao;
 import com.board.db.LoginDto;
 import com.board.db.cartDAO;
 import com.board.db.cartpDTO;
+import com.board.db.fileDAO;
+import com.board.db.fileDTO;
 import com.board.db.productDao;
 import com.board.db.productDto;
 import com.board.service.BoardService;
 import com.board.service.CartService;
+import com.board.service.FileService;
 import com.board.service.ProductService;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
 @WebServlet("/")
@@ -35,8 +42,11 @@ public class LoginController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		
 		HttpSession session = request.getSession();
 		String view = null;
+		PrintWriter out = response.getWriter();
 
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
@@ -44,6 +54,28 @@ public class LoginController extends HttpServlet {
 
 		if (com.equals("/index") || com.equals("/")) {
 			view = "index.jsp";
+		}
+		
+		else if(com.equals("/check")) {
+			int num = Integer.parseInt(request.getParameter("identify"));
+			
+			if(session.getAttribute("id") == null) {
+				out.println("<script>alert('로그인 후 사용할 수 있습니다.'); location.href='L_login.jsp';</script>"); 
+        		out.close();
+        		view="redirect:login";
+			}else {
+				switch(num) {
+				case 1:
+					view="redirect:list";
+					break;
+				case 2:
+					view="redirect:file";
+					break;
+				case 3:
+					view="redirect:shop";
+					break;
+				}
+			}
 		}
 		
 		else if(com.equals("/login")) {
@@ -262,9 +294,11 @@ public class LoginController extends HttpServlet {
 		//장바구니 기능----------------------------------------------------------------
 		
         else if(com.equals("/cart")) {
-        	int id = Integer.parseInt(request.getParameter("id"));
+        	String tmp = request.getParameter("id");
+        	int id=(tmp == null ? -1 : Integer.parseInt(tmp));
+        	
         	int check = new cartDAO().check(id);
-        	if(check <= 1) {
+        	if(check == 1 || id == -1) {
         		List<cartpDTO> dto = new CartService().showCart();
         		request.setAttribute("cart", dto);
         	}else {
@@ -280,6 +314,8 @@ public class LoginController extends HttpServlet {
         	int stock = new cartDAO().selectStock(id);
         	int quantity = new cartDAO().selectQuantity(id);
         	if(stock == quantity) {
+        		out.println("<script>alert('재고보다 많은 양을 구매할 수 없습니다.'); location.href='cart';</script>"); 
+        		out.close();
         	}else {
         		new cartDAO().plusQuantity(id);
         	}
@@ -289,8 +325,9 @@ public class LoginController extends HttpServlet {
         else if(com.equals("/minus")) {
         	int id = Integer.parseInt(request.getParameter("id"));
         	int quantity = new cartDAO().selectQuantity(id);
-        	if(quantity == 0) {
-        
+        	if(quantity == 1) {
+        		out.println("<script>alert('1개 이상은 구매해야 합니다.'); location.href='cart';</script>"); 
+        		out.close();
         	}else {
         		new cartDAO().minusQuantity(id);
         	}
@@ -302,6 +339,63 @@ public class LoginController extends HttpServlet {
         	new cartDAO().deleteCart(id);
         	view = "redirect:cart";
         }
+		
+        else if(com.equals("/file")){
+        	String tmp = request.getParameter("page");
+            int pageNo = (tmp != null && tmp.length() > 0)
+                    ? Integer.parseInt(tmp) : 1;
+
+            request.setAttribute("fileList",
+                    new FileService().getPList(pageNo));
+            request.setAttribute("pgnList",
+                    new FileService().getPagination(pageNo));
+            view = "files.jsp";
+        }
+        else if(com.equals("/add")) {
+        	 MultipartRequest multi = new MultipartRequest(
+        	            request,
+        	            request.getServletContext().getRealPath("/files"),   // 파일을 저장할 경로
+        	            100 * 1024 * 1024,                   // 최대 파일 크기 (100MB)
+        	            "utf-8",                             // 인코딩
+        	            new DefaultFileRenamePolicy()        // 동일 파일명 처리 방법
+        	    );
+
+        	    File file = multi.getFile("upload");         // 파일 객체 얻기
+
+        	    if (file != null) {
+        			fileDAO dao = new fileDAO();
+        	            // 현재 시간 얻기
+        	        String curTime = LocalDate.now() + " " +
+        	                         LocalTime.now().toString().substring(0, 8);
+        			
+        	        fileDTO dto = new fileDTO(0,file.getName(),curTime,(int)file.length());
+        	            // 쿼리 실행
+        	        dao.insertFiles(dto);
+        	    }else {
+        	    	out.println("<script>alert('파일을 선택해주세요.'); location.href='file';</script>"); 
+            		out.close();
+        	    }
+        	    view = "redirect:file";
+        }
+		
+        else if(com.equals("/deleteF")) {
+        	int num = Integer.parseInt(request.getParameter("num"));
+        	
+        	fileDAO dao = new fileDAO();
+        	fileDTO dto = dao.selectFile(num);
+        	if (dto != null) {
+
+                // 지정된 파일 삭제
+                File file = new File(request.getServletContext().getRealPath("/files") +
+                                     dto.getFname());
+                if (file != null) {
+                    file.delete();
+                }
+                dao.deleteFiles(num);  
+        	}
+        	view = "redirect:file";
+        }
+
 		
 		//redirect 와 forwarding	 구분 쿼리
 		if (view.startsWith("redirect:")) {

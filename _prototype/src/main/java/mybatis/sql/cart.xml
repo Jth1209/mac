@@ -22,8 +22,8 @@
 	</select>
 	
 	<insert id="insertCart" parameterType="int">
-		INSERT INTO cart (id,product_id,quantity)
-		VALUES (cart_a.nextval,#{product_id},1)
+		INSERT INTO cart (product_id,quantity)
+		VALUES (#{product_id},1)
 	</insert>
 
 	<update id="plusQuantity" parameterType="int">

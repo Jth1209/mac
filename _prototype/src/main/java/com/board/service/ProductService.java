@@ -5,18 +5,16 @@ import java.util.List;
 
 import com.board.db.BoardDao;
 import com.board.db.BoardDto;
-import com.board.db.BoardpDto;
 import com.board.db.Pagination;
 import com.board.db.productDao;
 import com.board.db.productDto;
-import com.board.db.productpDto;
 
 public class ProductService {
 	private static final int listSize = 10;
     private static final int paginationSize = 5;
 
-    public List<productpDto> getPList(int pageNo) {
-       return new productDao().getAllProducts((pageNo - 1) * listSize+1);
+    public List<productDto> getPList(int pageNo) {
+       return new productDao().getAllProducts((pageNo - 1) * listSize);
     }
 
     public ArrayList<Pagination> getPagination(int pageNo) {

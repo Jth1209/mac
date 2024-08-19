@@ -5,10 +5,8 @@
 	<select id="count" resultType="int">
 		select count(*) from board
 	</select>
-	<select id="selectPage" parameterType="int" resultType="com.board.db.BoardpDto">
-		<![CDATA[
-		select * FROM (select rownum as rn,b.* from (select * from board order by num desc) b where rownum<#{num}+5) where rn>=#{num}
-		]]>
+	<select id="selectPage" parameterType="int" resultType="com.board.db.BoardDto">
+		select * from board where num limit #{num},5
 	</select>
 	<select id="selectOne" parameterType="int" resultType="com.board.db.BoardDto">
 		select * from board where num=#{num}
@@ -21,8 +19,8 @@
 		regtime=#{regtime},hits=0 where num=#{num}
 	</update> 
 	<insert id="insertBoard" parameterType="com.board.db.BoardDto">
-		insert into board (num,writer,title,content,regtime,hits)
-		values (board_a.nextval,#{writer},#{title},#{content},#{regtime},0)
+		insert into board (writer,title,content,regtime,hits)
+		values (#{writer},#{title},#{content},#{regtime},0)
 	</insert>
 	<delete id="deleteBoard" parameterType="int">
 		delete from board where num=#{num}
