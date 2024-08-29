@@ -4,7 +4,7 @@
 <mapper namespace="Cart">
 	<select id="showCart" resultType="com.board.db.cartpDTO">
 		SELECT c.id,c.product_id,p.name,p.description,p.price,p.stock,c.quantity FROM
-		products p,cart c where p.id=c.product_id order by c.id
+		products p,cart c where p.id=c.product_id order by c.id desc
 	</select>
 
 	<select id="selectStock" parameterType="int" resultType="int">

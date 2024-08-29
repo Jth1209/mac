@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="show">
+		<table class="insert" border="1">
+			<tr>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성시간</td>
+				<td>조회수</td>
+			</tr>
+		</table>
+		<button type="button" class="write" onclick="location.href='javascript:wirte();'">글쓰기</button>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<!-- html 파일에서 ${}를 사용할 때 써주는것 jsp에서는 jstl을 써줘야 한다. -->
+	<script>
+	const url = "http://localhost:4000/board";
+	
+	$.ajax({
+		url:url,
+		method:"GET",
+		success: function(data){
+			const insert = $(".insert");
+			data.forEach(post =>{
+				insert.append(`<tr><td><a href='javascript:Details(${post.id});'>${post.title}</a></td><td>${post.id}</td><td>${post.regtime}</td><td>${post.hits}</td></tr>`);
+			})
+		},
+		error: function(error){
+			console.error('Error:',error);
+		}
+	});
+			function Details(userid){//선택한 유저의 글 정보를 출력해주는 함수
+				$.ajax({
+					url:url+"/"+userid,
+					method:"GET",
+					success: function(data){
+						const show = $('.show');
+						show.empty();
+						data.append(`<table class="userboard" border="1">
+								<tr>
+								<td>제목</td>
+								<td>작성자</td>
+								<td>내용</td>
+								<td>작성시간</td>
+								<td>조회수</td>
+								</tr>
+								<tr>
+								<td>${post.title}</td>
+								<td>${post.id}</td>
+								<td>${post.content}</td>
+								<td>${post.regtime}</td>
+								<td>${post.hits}</td>
+								</tr>
+						</table>
+						<button class="write" onclick="history.back()">돌아가기</button>
+						<button class="write" onclick="">수정</button>
+						<button class="write" onclick="">삭제</button>
+					`);
+					}
+				})
+			};
+			
+			function write(){
+				const show = $(".show");
+				show.empty();
+				show.append(`<input type="text" name="title" palceholder="글 제목">
+							 <input type="text" name="writer" palceholder="작성자">
+							 <input type="text" name="content" palceholder="글 내용">
+							 
+							 <button type="button" onclick="location.href='javascript:submit()'">제출
+							 `);
+			}
+</script>
+</body>
+</html>

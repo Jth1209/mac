@@ -6,7 +6,7 @@
 		select count(*) from board
 	</select>
 	<select id="selectPage" parameterType="int" resultType="com.board.db.BoardDto">
-		select * from board where num limit #{num},5
+		select * from board order by num desc limit #{num},5
 	</select>
 	<select id="selectOne" parameterType="int" resultType="com.board.db.BoardDto">
 		select * from board where num=#{num}

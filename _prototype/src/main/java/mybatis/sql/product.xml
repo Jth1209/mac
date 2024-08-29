@@ -3,7 +3,7 @@
 
 <mapper namespace="Products">
 	<select id="selectAll" parameterType="int" resultType="com.board.db.productDto">
-		select * from products order by id limit #{num},10;
+		select * from products order by id desc limit #{num},10;
 	</select>
 	<select id="count" resultType="int">
 		select count(*) from products

@@ -3,7 +3,7 @@
 
 <mapper namespace="File">
 	<select id="showFiles" parameterType="int" resultType="com.board.db.fileDTO">
-		select * from webhard order by id limit #{num},10
+		select * from webhard order by id desc limit #{num},10
 	</select>
 	<select id="count" resultType="int">
 		select count(*) from webhard

@@ -112,6 +112,10 @@ public class LoginController extends HttpServlet {
 			LoginDto dto = new LoginDto(id,pw,name);
 			dao.updateUser(dto);
 			
+			out.println("<script>alert('회원정보 변경됨. 다시 로그인해주세요'); location.href='logoutProcess';</script>"); 
+    		out.close();
+
+			
 			view = "redirect:logoutProcess";
 			
 		}
