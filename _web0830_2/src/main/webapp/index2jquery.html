@@ -78,7 +78,7 @@
                         const itemsList = $('#itemsList');
                         itemsList.empty();
                         items.forEach(item => {
-                            const li = $('<li>').addClass('list-group-item').text(`ID: ${item.id}, Name: ${item.name}`);
+                            const li = $('<li>').addClass('list-group-item').text(`ID: ${item.id}, Name: ${item.name}`);//<li class="list-group-item">ID: ${item.id}, Name: ${item.name}</li>
                             itemsList.append(li);
                         });
                     }
